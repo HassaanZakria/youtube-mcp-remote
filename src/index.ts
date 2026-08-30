@@ -811,7 +811,6 @@ async function main() {
       const { StreamableHTTPServerTransport } = await import(
         '@modelcontextprotocol/sdk/server/streamableHttp.js'
       );
-      const { randomUUID } = await import('node:crypto');
 
       const app = express();
       app.use(express.json());
@@ -827,7 +826,7 @@ async function main() {
           // cross-request session bugs and keeps deployment simple.
           const requestServer = buildServer(client);
           const transport = new StreamableHTTPServerTransport({
-            sessionIdGenerator: () => randomUUID()
+            sessionIdGenerator: undefined,
           });
           res.on('close', () => {
             transport.close();
